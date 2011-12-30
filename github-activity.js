@@ -1,3 +1,5 @@
+
+// Add this to the Date class so we can get spelled out month names
 Date.prototype.getMonthName = function(lang) {
     lang = lang && (lang in Date.locale) ? lang : 'en';
     return Date.locale[lang].month_names[this.getMonth()];
@@ -11,9 +13,15 @@ Date.locale = {
 
 function githubActivity(username) {
 
+    // Number of feed items we want to display
     var numItems = 10;
+
+    // Container to populate. CSS is currently all set for 'div#githubActivity,' FYI
     var divSelector = "div#githubActivity";
+
     var url = encodeURIComponent("http://github.com/"+username+".json");
+    
+    // We have to pipe the GitHub JSON through Yahoo! Pipes to get JSONP
     var pipesURL = "http://pipes.yahoo.com/pipes/pipe.run?u="+url+"&_id=332d9216d8910ba39e6c2577fd321a6a&_render=json&_callback=?";
 
   jQuery.getJSON(pipesURL, function(data){
@@ -25,11 +33,13 @@ function githubActivity(username) {
       html += formatEventHTML(items[i]);
     }
 
+    // Append the feed HTML and make the dates relative to now.
     jQuery(divSelector).append(html);
     jQuery("time.js-relative-date").timeago();
   });
 }
 
+// Print out an ISO 8601 date time string
 function getISODateString(d){
  function pad(n){return n<10 ? '0'+n : n}
  return d.getUTCFullYear()+'-'
@@ -39,6 +49,7 @@ function getISODateString(d){
       + pad(d.getUTCMinutes())+':'
       + pad(d.getUTCSeconds())+'Z';}
 
+// Return HTML for each type of GitHub event
 function formatEventHTML(event) {
 
     var avatarStub = "https://secure.gravatar.com/avatar/";
@@ -64,13 +75,11 @@ function formatEventHTML(event) {
           itemHTML += "<li><code><a href=\""+githubStub+event.repository.owner+"/"+event.repository.name+"/commit/"+event.payload.head+"\">"+commits.json[0].substring(0,6)+"</a></code><div class=\"message\"><blockquote title=\""+commits.json[2]+"\">"+commits.json[2]+"</blockquote></div></li>";
 
         } else {
+
+          // If there are multiple commits in a push they will be in an array
           for(var i=0;i<commits.length;i++) {
-           itemHTML += "<li>";
 
-           if( commits.length > 1 ) {
-             itemHTML += "<span title=\""+event.actor+"\"><img height=\"16\" src=\""+avatarStub+event.actor_attributes.gravatar_id+"?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png\" width=\"16\"></span>";
-           }
-
+            itemHTML += "<li><span title=\""+event.actor+"\"><img height=\"16\" src=\""+avatarStub+event.actor_attributes.gravatar_id+"?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png\" width=\"16\"></span>";
             itemHTML += "<code><a href=\""+githubStub+event.repository.owner+"/"+event.repository.name+"/commit/"+event.payload.head+"\">"+commits[i].json[0].substring(0,6)+"</a></code><div class=\"message\"><blockquote title=\""+commits[i].json[2]+"\">"+commits[i].json[2]+"</blockquote></div></li>";
           }
         }
@@ -102,6 +111,8 @@ function formatEventHTML(event) {
         break;
     } 
 
+    // If for some reason the switch doesn't catch anything, create an empty string
+    // so we don't print out an undefined.
     if(typeof itemHTML === 'undefined' ) {
       var itemHTML = '';
     }
@@ -109,6 +120,7 @@ function formatEventHTML(event) {
     return itemHTML;
 }
 
+// Simple function, take in a branch path and return the last node
 function getBranch(branch) {
   
   var regex = /^.*\/([^/]+)$/;
