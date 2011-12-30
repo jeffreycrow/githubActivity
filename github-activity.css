@@ -1,0 +1,78 @@
+div#githubActivity .alert {
+padding:0 0 1em 2em;
+}
+
+div#githubActivity .push {
+height:auto;
+background:('https://a248.e.akamai.net/assets.github.com/images/modules/dashboard/news/push.png');
+}
+
+div#githubActivity > div.updated {
+color:#999;
+margin-bottom:5px;
+font-size:0.8em;
+}
+
+div#githubActivity {
+font-family:Helvetica, sans-serif;
+font:12px helvetica,arial,freesans,clean,sans-serif;
+line-height:1.4;
+width:500px;
+}
+
+div#githubActivity .gravatar {
+float:left;
+border:1px solid #D0D0D0;
+line-height:0;
+margin-right:.7em;
+padding:2px;
+}
+
+div#githubActivity .alert .body {
+border-bottom:1px solid #CCC;
+overflow:hidden;
+padding:0 0 1em;
+}
+
+div#githubActivity .commits span > img {
+border:1px solid #D0D0D0;
+vertical-align:middle;
+background-color:#FFF;
+margin:0 3px;
+padding:1px;
+}
+
+div#githubActivity .alert .title span {
+background-color:#FFF6A9;
+}
+
+div#githubActivity .commits li {
+list-style-type:none;
+margin-top:.25em;
+}
+
+div#githubActivity .alert .title {
+font-weight:700;
+}
+
+div#githubActivity a {
+color:#4183C4;
+text-decoration:none;
+}
+
+div#githubActivity > pre,code {
+font-family:Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;
+font-size:90%;
+}
+
+div#githubActivity div.message {
+display:inline;
+color:#444;
+}
+
+div#githubActivity li blockquote {
+display:inline;
+color:#444;
+padding-left:4px;
+margin:0px;
+}
