@@ -1,0 +1,16 @@
+This code will take in a username, fetch that user's recent activity feed in JSON which is piped through a 
+Yahoo! Pipe to get JSONP so we can do the remote pull. Then it's printed (sort of) like GitHub does it. The 
+HTML markup/CSS is easy enough to change.
+
+* Requires jQuery, jquery.timeago.js (included)
+
+Add a div with the id 'githubActivity' to your HTML. Then put: 
+
+githubActivity("username");
+
+into your $(document).ready().
+
+TODO:
+* Finish adding HTML for all GitHub events.
+* Comment code
+* Maybe try to eliminate dependencies if I get bored enough.
