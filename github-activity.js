@@ -99,8 +99,8 @@ function formatEventHTML(event) {
         break;
       case 'FollowEvent':
         var dateTime = new Date(event.created_at);
-
         var itemHTML = "<div class=\"alert follow\"><div class=\"body\"><div class=\"title\"><a href=\""+githubStub+event.actor+"\">"+event.actor+"</a> <span>started following</span> <a href=\""+githubStub+"/"+event.payload.target.login+"\">"+event.payload.target.login+"</a> <time class=\"js-relative-date\" datetime=\""+getISODateString(dateTime)+"\" title=\""+getISODateString(dateTime)+"\">"+dateTime.getMonthName()+" "+dateTime.getDate()+", "+dateTime.getFullYear()+"</time></div><div class=\"details\"><div class=\"gravatar\"><img height=\"30\" src=\""+avatarStub+event.payload.target.gravatar_id+"?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png\" width=\"30\"></div><div class=\"message\">"+event.payload.target.login+" has "+event.payload.target.repos+" public repo";
+
         if( event.payload.target.repos > 1 ) {
           itemHTML += "s";
         }
@@ -118,8 +118,10 @@ function formatEventHTML(event) {
         var itemHTML = '';
         break;
       case 'ForkEvent':
-        var itemHTML = '';
+        var dateTime = new Date(event.created_at);
+        var itemHTML = "<div class=\"alert fork\"><div class=\"body\"><div class=\"title\"><a href=\""+githubStub+event.actor+"\">"+event.actor+"</a> <span>forked</span> <a href=\""+githubStub+"/"+event.repository.owner+"/"+event.repository.name+"\">"+event.repository.owner+"/"+event.repository.name+"</a> <time class=\"js-relative-date\" datetime=\""+getISODateString(dateTime)+"\" title=\""+getISODateString(dateTime)+"\">"+dateTime.getMonthName()+" "+dateTime.getDate()+", "+dateTime.getFullYear()+"</time></div><div class=\"details\"><div class=\"gravatar\"><img height=\"30\" src=\""+avatarStub+event.actor_attributes.gravatar_id+"?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png\" width=\"30\"></div><div class=\"message\">Forked repository is at <a href=\""+githubStub+"/"+event.actor+"/"+event.repository.name+"\">"+event.actor+"/"+event.repository.name+"</a></div></div></div></div>";
         break;
+
       default:
         var itemHTML = '';
         break;
