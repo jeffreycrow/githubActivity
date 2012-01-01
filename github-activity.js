@@ -98,9 +98,21 @@ function formatEventHTML(event) {
         var itemHTML = "<div class=\"alert create\"><div class=\"body\"><div class=\"title\"><a href=\""+githubStub+event.actor+"\">"+event.actor+"</a> <span>created</span> branch <a href=\""+githubStub+githubStub+event.actor+"/"+event.repository.name+"/tree/"+event.payload.ref+"\">"+event.payload.ref+"</a> at <a href=\""+githubStub+githubStub+event.actor+"/"+event.repository.name+"\">"+event.actor+"/"+event.repository.name+"</a> <time class=\"js-relative-date\" datetime=\""+getISODateString(dateTime)+"\" title=\""+getISODateString(dateTime)+"\">"+dateTime.getMonthName()+" "+dateTime.getDate()+", "+dateTime.getFullYear()+"</time> </div><div class=\"details\"><div class=\"gravatar\"><img height=\"30\" src=\""+avatarStub+event.actor_attributes.gravatar_id+"?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png\" width=\"30\"></div> <div class=\"message\">New branch is at <a href=\""+githubStub+event.actor+"/"+event.repository.name+"/tree/"+event.payload.ref+"\">/"+event.actor+"/"+event.repository.name+"/tree/"+event.payload.ref+"</a><br><a href=\""+githubStub+event.actor+"/"+event.repository.name+"/compare/"+event.payload.ref+"\" class=\"compare-link\">Compare "+event.payload.ref+" branch with master »</a></div></div></div></div>";
         break;
       case 'FollowEvent':
+        var dateTime = new Date(event.created_at);
 
-        var itemHTML = '';
-        var targetUser = event.payload.target;
+        var itemHTML = "<div class=\"alert follow\"><div class=\"body\"><div class=\"title\"><a href=\""+githubStub+event.actor+"\">"+event.actor+"</a> <span>started following</span> <a href=\""+githubStub+"/"+event.payload.target.login+"\">"+event.payload.target.login+"</a> <time class=\"js-relative-date\" datetime=\""+getISODateString(dateTime)+"\" title=\""+getISODateString(dateTime)+"\">"+dateTime.getMonthName()+" "+dateTime.getDate()+", "+dateTime.getFullYear()+"</time></div><div class=\"details\"><div class=\"gravatar\"><img height=\"30\" src=\""+avatarStub+event.payload.target.gravatar_id+"?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png\" width=\"30\"></div><div class=\"message\">"+event.payload.target.login+" has "+event.payload.target.repos+" public repo";
+        if( event.payload.target.repos > 1 ) {
+          itemHTML += "s";
+        }
+
+        itemHTML += " and "+event.payload.target.followers+" follower";
+
+        if( event.payload.target.followers > 1 ) {
+          itemHTML += "s";
+        }
+
+        itemHTML += "</div></div></div></div>";
+        
         break;
       case 'IssuesEvent':
         var itemHTML = '';
