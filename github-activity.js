@@ -26,6 +26,7 @@ function githubActivity(username) {
 
   jQuery.getJSON(pipesURL, function(data){
     items = data.value.items[0].json;
+    console.log(items);
     var html = "";
 
     for(var i=0;i<numItems;i++) {
@@ -88,7 +89,8 @@ function formatEventHTML(event) {
         break;
 
       case 'PullRequestEvent':
-        var itemHTML = '';
+        var dateTime = new Date(event.created_at);
+        var itemHTML = "<div class=\"alert issues_closed\"><div class=\"body\"><div class=\"title\"><a href=\""+githubStub+event.actor+"\">"+event.actor+"</a> <span>"+event.payload.action+"</span> <a href=\""+githubStub+"/"+event.repository.name+"/pull/"+event.payload.number+"\">pull request "+event.payload.number+"</a> on <a href=\""+githubStub+"/"+event.repository.name+"\">"+githubStub+"/"+event.repository.name+"</a> <time class=\"js-relative-date\" datetime=\""+getISODateString(dateTime)+"\" title=\""+getISODateString(dateTime)+"\">"+dateTime.getMonthName()+" "+dateTime.getDate()+", "+dateTime.getFullYear()+"</time></div><div class=\"details\"><div class=\"gravatar\"><img height=\"30\" src=\""+avatarStub+event.actor_attributes.gravatar_id+"?s=140&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png\" width=\"30\"></div><div class=\"message\"><blockquote>"+event.payload.pull_request.title+"</blockquote></div></div></div></div>";
         break;
       case 'CreateEvent':
         if(event.payload.ref === null) { break; }
